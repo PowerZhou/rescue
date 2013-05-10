@@ -1,0 +1,336 @@
+// Decompiled by DJ v3.7.7.81 Copyright 2004 Atanas Neshkov  Date: 2013-5-10 11:48:06
+// Home Page : http://members.fortunecity.com/neshkov/dj.html  - Check often for new version!
+// Decompiler options: packimports(3) 
+// Source File Name:   BattleUI.java
+
+package com.zorostudio.battleUI;
+
+import com.zorostudio.fight.PlayLayer;
+import com.zorostudio.publicClass.*;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import org.andengine.entity.modifier.*;
+import org.andengine.entity.scene.Scene;
+import org.andengine.entity.sprite.ButtonSprite;
+import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.text.*;
+import org.andengine.extension.texturepacker.opengl.texture.util.texturepacker.TexturePackTextureRegionLibrary;
+import org.andengine.opengl.texture.region.TextureRegion;
+import org.andengine.util.HorizontalAlign;
+import org.andengine.util.color.Color;
+import org.andengine.util.modifier.ease.EaseElasticOut;
+
+// Referenced classes of package com.zorostudio.battleUI:
+//            ChildBattleUI
+
+public class BattleUI extends PublicUI
+{
+
+    public BattleUI()
+    {
+        allPass = false;
+        level = 0;
+        showingChild = false;
+    }
+
+    public void creatMenu()
+    {
+        GameDataInstance.getInstance().cardInBag.size();
+        Integer.parseInt(GameDataInstance.getInstance().getUserInfoValue("card_space"));
+        System.out.println("\u6700\u540E\u521B\u5EFA\u4E86\u8FD9\u91CC\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014");
+        buttonSet.clear();
+        ui = null;
+        int tempIndex = GameDataInstance.getInstance().BattleMax.indexOf("_");
+        int battleM = Integer.parseInt(GameDataInstance.getInstance().BattleMax.substring(0, tempIndex));
+        ArrayList battleNames = new ArrayList();
+        int i = 1;
+        do
+        {
+            HashMap dungeon = GameDataInstance.getInstance().getDungeonInfo(i);
+            if(i > battleM)
+                break;
+            if(dungeon == null)
+            {
+                allPass = true;
+                break;
+            }
+            battleNames.add((String)dungeon.get("name"));
+            System.out.println((new StringBuilder("dungeon_______________________________")).append((String)dungeon.get("name")).toString());
+            i++;
+        } while(true);
+        level = battleNames.size();
+        String strs[] = new String[level];
+        for(int j = level - 1; j > -1; j--)
+            strs[level - j - 1] = (String)battleNames.get(j);
+
+        getButtonMenu(strs, false);
+        getTitle("\u5192\u9669", false, false, 0, false);
+        showingChild = false;
+        showing = true;
+    }
+
+    public void creatMenubyGuide(int stage)
+    {
+        GameDataInstance.getInstance().cardInBag.size();
+        Integer.parseInt(GameDataInstance.getInstance().getUserInfoValue("card_space"));
+        ui = null;
+        allPass = true;
+        mMainScene.getTouchAreas();
+        ArrayList battleNames = new ArrayList();
+        switch(stage)
+        {
+        default:
+            break;
+
+        case 2: // '\002'
+        {
+            battleNames.add("\u5168\u5C4F\u653B\u51FB");
+            level = battleNames.size();
+            String strs[] = new String[level];
+            for(int j = level - 1; j > -1; j--)
+                strs[level - j - 1] = (String)battleNames.get(j);
+
+            getButtonMenu(strs, false);
+            Sprite powerSprite = new Sprite(0.0F, 0.0F, getTextureRegionFromPic("takepng/Mask02.png"), vboManager);
+            SequenceEntityModifier ac1 = new SequenceEntityModifier(new IEntityModifier[] {
+                new FadeInModifier(0.6F), new FadeOutModifier(0.6F)
+            });
+            LoopEntityModifier ac2 = new LoopEntityModifier(ac1);
+            powerSprite.registerEntityModifier(ac2);
+            powerSprite.setPosition((float)(CAMERA_WIDTH / 2) - powerSprite.getWidth() / 2.0F, ((MyButtonSprite)buttonSet.get(0)).getY() + (((MyButtonSprite)buttonSet.get(0)).getHeight() - powerSprite.getHeight()) / 2.0F);
+            attachChild(powerSprite);
+            Sprite dialogBack = new Sprite(0.0F, 0.0F, MYTextureManager.getMYTextureManager().dback, vboManager);
+            attachChild(dialogBack);
+            dialogBack.setPosition((float)(CAMERA_WIDTH / 2) - dialogBack.getWidth() / 2.0F, (float)(CAMERA_HEIGHT - 100) - dialogBack.getWidth());
+            TextWrap centerText = new TextWrap();
+            centerText.wrap(20F, 60F, mFont, "\u6218\u6597\u5B8C\u6210\u4E4B\u540E\uFF0C\u6211\u4EEC\u53EF\u4EE5\u524D\u5F80\u4E0B\u4E00\u4E2A\u5730\u7262\u4E86\u3002", 1000, new TextOptions(AutoWrap.LETTERS, dialogBack.getWidth() - 40F, HorizontalAlign.CENTER), vboManager, 10);
+            dialogBack.attachChild(centerText);
+            break;
+        }
+
+        case 3: // '\003'
+        {
+            battleNames.add("\u5168\u5C4F\u653B\u51FB");
+            level = battleNames.size();
+            String strs[] = new String[level];
+            for(int j = level - 1; j > -1; j--)
+                strs[level - j - 1] = (String)battleNames.get(j);
+
+            getButtonMenu(strs, false);
+            Sprite powerSprite = new Sprite(0.0F, 0.0F, getTextureRegionFromPic("takepng/Mask06.png"), vboManager);
+            SequenceEntityModifier ac1 = new SequenceEntityModifier(new IEntityModifier[] {
+                new FadeInModifier(0.6F), new FadeOutModifier(0.6F)
+            });
+            LoopEntityModifier ac2 = new LoopEntityModifier(ac1);
+            powerSprite.registerEntityModifier(ac2);
+            powerSprite.setPosition(-10F, -15F);
+            ((MyButtonSprite)MainUI.getMain().buttonSet.get(1)).attachChild(powerSprite);
+            Sprite dialogBack = new Sprite(0.0F, 0.0F, MYTextureManager.getMYTextureManager().dback, vboManager);
+            attachChild(dialogBack);
+            dialogBack.setPosition((float)(CAMERA_WIDTH / 2) - dialogBack.getWidth() / 2.0F, (float)(CAMERA_HEIGHT - 100) - dialogBack.getWidth());
+            TextWrap centerText = new TextWrap();
+            centerText.wrap(20F, 60F, mFont, "\u6211\u4EEC\u83B7\u5F97\u4E86\u65B0\u7684\u602A\u7269\uFF0C\u8BA9\u6211\u4EEC\u628A\u5B83\u52A0\u5165\u5230\u961F\u4F0D\u4E2D\u3002", 1000, new TextOptions(AutoWrap.LETTERS, dialogBack.getWidth() - 40F, HorizontalAlign.CENTER), vboManager, 10);
+            dialogBack.attachChild(centerText);
+            break;
+        }
+
+        case 7: // '\007'
+        {
+            battleNames.add("\u6062\u590D\u548C\u653B\u51FB\u5C5E\u6027");
+            level = battleNames.size();
+            String strs[] = new String[level];
+            for(int j = level - 1; j > -1; j--)
+                strs[level - j - 1] = (String)battleNames.get(j);
+
+            getButtonMenu(strs, false);
+            Sprite powerSprite = new Sprite(0.0F, 0.0F, getTextureRegionFromPic("takepng/Mask02.png"), vboManager);
+            SequenceEntityModifier ac1 = new SequenceEntityModifier(new IEntityModifier[] {
+                new FadeInModifier(0.6F), new FadeOutModifier(0.6F)
+            });
+            LoopEntityModifier ac2 = new LoopEntityModifier(ac1);
+            powerSprite.registerEntityModifier(ac2);
+            powerSprite.setPosition((float)(CAMERA_WIDTH / 2) - powerSprite.getWidth() / 2.0F, ((MyButtonSprite)buttonSet.get(0)).getY() + (((MyButtonSprite)buttonSet.get(0)).getHeight() - powerSprite.getHeight()) / 2.0F);
+            attachChild(powerSprite);
+            break;
+        }
+
+        case 13: // '\r'
+        {
+            battleNames.add("\u5168\u5C4F\u653B\u51FB");
+            level = battleNames.size();
+            String strs[] = new String[level];
+            for(int j = level - 1; j > -1; j--)
+                strs[level - j - 1] = (String)battleNames.get(j);
+
+            getButtonMenu(strs, false);
+            Sprite powerSprite = new Sprite(0.0F, 0.0F, getTextureRegionFromPic("takepng/Mask06.png"), vboManager);
+            SequenceEntityModifier ac1 = new SequenceEntityModifier(new IEntityModifier[] {
+                new FadeInModifier(0.6F), new FadeOutModifier(0.6F)
+            });
+            LoopEntityModifier ac2 = new LoopEntityModifier(ac1);
+            powerSprite.registerEntityModifier(ac2);
+            powerSprite.setPosition(-10F, -15F);
+            ((MyButtonSprite)MainUI.getMain().buttonSet.get(1)).attachChild(powerSprite);
+            Sprite dialogBack = new Sprite(0.0F, 0.0F, MYTextureManager.getMYTextureManager().dback, vboManager);
+            attachChild(dialogBack);
+            dialogBack.setPosition((float)(CAMERA_WIDTH / 2) - dialogBack.getWidth() / 2.0F, (float)(CAMERA_HEIGHT - 100) - dialogBack.getWidth());
+            TextWrap centerText = new TextWrap();
+            centerText.wrap(20F, 60F, mFont, "\u6211\u4EEC\u83B7\u5F97\u4E86\u65B0\u7684\u602A\u7269\uFF0C\u8BA9\u6211\u4EEC\u628A\u5B83\u52A0\u5165\u5230\u961F\u4F0D\u4E2D\u3002", 1000, new TextOptions(AutoWrap.LETTERS, dialogBack.getWidth() - 40F, HorizontalAlign.CENTER), vboManager, 10);
+            dialogBack.attachChild(centerText);
+            break;
+        }
+
+        case 14: // '\016'
+        {
+            battleNames.add("\u6280\u80FD");
+            level = battleNames.size();
+            String strs[] = new String[level];
+            for(int j = level - 1; j > -1; j--)
+                strs[level - j - 1] = (String)battleNames.get(j);
+
+            getButtonMenu(strs, false);
+            Sprite powerSprite = new Sprite(0.0F, 0.0F, getTextureRegionFromPic("takepng/Mask06.png"), vboManager);
+            SequenceEntityModifier ac1 = new SequenceEntityModifier(new IEntityModifier[] {
+                new FadeInModifier(0.6F), new FadeOutModifier(0.6F)
+            });
+            LoopEntityModifier ac2 = new LoopEntityModifier(ac1);
+            powerSprite.registerEntityModifier(ac2);
+            powerSprite.setPosition(-10F, -15F);
+            ((MyButtonSprite)MainUI.getMain().buttonSet.get(1)).attachChild(powerSprite);
+            Sprite dialogBack = new Sprite(0.0F, 0.0F, MYTextureManager.getMYTextureManager().dback, vboManager);
+            attachChild(dialogBack);
+            dialogBack.setPosition((float)(CAMERA_WIDTH / 2) - dialogBack.getWidth() / 2.0F, (float)(CAMERA_HEIGHT - 100) - dialogBack.getWidth());
+            TextWrap centerText = new TextWrap();
+            centerText.wrap(20F, 60F, mFont, "\u4E00\u4E2A\u540C\u6837\u7684\u602A\u7269\uFF0C\u6211\u4EEC\u4E0D\u9700\u8981\u53E6\u4E00\u53EA\u52A0\u5165\u961F\u4F0D\u4E86\uFF0C\u4F46\u662F\u6211\u4EEC\u53EF\u4EE5\u4F7F\u7528\u5B83\u6765\u5F3A\u5316\u602A\u7269\u3002", 1000, new TextOptions(AutoWrap.LETTERS, dialogBack.getWidth() - 40F, HorizontalAlign.CENTER), vboManager, 10);
+            dialogBack.attachChild(centerText);
+            break;
+        }
+
+        case 17: // '\021'
+        {
+            battleNames.add("\u6280\u80FD");
+            level = battleNames.size();
+            String strs[] = new String[level];
+            for(int j = level - 1; j > -1; j--)
+                strs[level - j - 1] = (String)battleNames.get(j);
+
+            getButtonMenu(strs, false);
+            ((MyButtonSprite)MainUI.getMain().buttonSet.get(0)).detachChildren();
+            ((MyButtonSprite)MainUI.getMain().buttonSet.get(1)).detachChildren();
+            Sprite powerSprite = new Sprite(0.0F, 0.0F, getTextureRegionFromPic("takepng/Mask02.png"), vboManager);
+            SequenceEntityModifier ac1 = new SequenceEntityModifier(new IEntityModifier[] {
+                new FadeInModifier(0.6F), new FadeOutModifier(0.6F)
+            });
+            LoopEntityModifier ac2 = new LoopEntityModifier(ac1);
+            powerSprite.registerEntityModifier(ac2);
+            powerSprite.setPosition((float)(CAMERA_WIDTH / 2) - powerSprite.getWidth() / 2.0F, ((MyButtonSprite)buttonSet.get(0)).getY() + (((MyButtonSprite)buttonSet.get(0)).getHeight() - powerSprite.getHeight()) / 2.0F);
+            attachChild(powerSprite);
+            Sprite dialogBack = new Sprite(0.0F, 0.0F, MYTextureManager.getMYTextureManager().dback, vboManager);
+            attachChild(dialogBack);
+            dialogBack.setPosition((float)(CAMERA_WIDTH / 2) - dialogBack.getWidth() / 2.0F, (float)(CAMERA_HEIGHT - 100) - dialogBack.getWidth());
+            TextWrap centerText = new TextWrap();
+            centerText.wrap(20F, 60F, mFont, "\u4E00\u4E2A\u540C\u6837\u7684\u602A\u7269\uFF0C\u6211\u4EEC\u4E0D\u9700\u8981\u53E6\u4E00\u53EA\u52A0\u5165\u961F\u4F0D\u4E86\uFF0C\u4F46\u662F\u6211\u4EEC\u53EF\u4EE5\u4F7F\u7528\u5B83\u6765\u5F3A\u5316\u602A\u7269\u3002", 1000, new TextOptions(AutoWrap.LETTERS, dialogBack.getWidth() - 40F, HorizontalAlign.CENTER), vboManager, 10);
+            dialogBack.attachChild(centerText);
+            break;
+        }
+        }
+        getTitle("\u5192\u9669", false, false, 0, false);
+        showingChild = false;
+        showing = true;
+    }
+
+    protected void buttonPress(int num)
+    {
+        System.out.println((new StringBuilder("\u5F53\u524D\u6559\u7A0B\u6307\u6570\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014")).append(PlayLayer.guideStage).toString());
+        if(PlayLayer.guideStage == 5 || PlayLayer.guideStage == 14)
+            return;
+        detachChildren();
+        mMainScene.clearTouchAreas();
+        GameDataInstance.getInstance().mainUINeedRegisterTouchArea = true;
+        if(PlayLayer.guideStage == 2)
+        {
+            PlayLayer.guideStage++;
+            MainUI.getMain().playUI.creatMenu();
+            MainUI.getMain().playUI.initguide(PlayLayer.guideStage);
+            return;
+        }
+        if(PlayLayer.guideStage == 7)
+        {
+            PlayLayer.guideStage++;
+            MainUI.getMain().playUI.creatMenu();
+            MainUI.getMain().playUI.initguide(PlayLayer.guideStage);
+            return;
+        }
+        if(PlayLayer.guideStage == 17)
+        {
+            MainUI.getMain().playUI.creatMenu();
+            MainUI.getMain().playUI.initguide(PlayLayer.guideStage);
+            return;
+        } else
+        {
+            MainUI.getMain().ISfirstLogin = false;
+            MainUI.getMain().playUI.releaseEveryThing();
+            ui = new ChildBattleUI();
+            ui.battleNum = level - num;
+            showChildUI(ui);
+            showingChild = true;
+            return;
+        }
+    }
+
+    protected MyButtonSprite getNormalButton(int posx, int posy, String text, boolean isNew, org.andengine.entity.sprite.ButtonSprite.OnClickListener listener)
+    {
+        TextureRegion textureRegion = usualTexture.get(15);
+        MyButtonSprite b = new MyButtonSprite(posx, posy, textureRegion, vboManager, listener);
+        Text centerText = new Text(50F, textureRegion.getHeight() / 2.0F - 5F, mFont, text, new TextOptions(HorizontalAlign.CENTER), vboManager);
+        centerText.setColor(new Color(1.0F, 0.6F, 0.0F));
+        b.attachChild(centerText);
+        Sprite tip;
+        if(isNew)
+            tip = new Sprite(40F, 10F, usualTexture.get(16), vboManager);
+        else
+            tip = new Sprite(40F, 10F, usualTexture.get(17), vboManager);
+        b.attachChild(tip);
+        return b;
+    }
+
+    protected void getButtonMenu(String str[], boolean reset)
+    {
+        menuChildScene = new Sprite(0.0F, 0.0F, point, vboManager);
+        attachChild(menuChildScene);
+        for(int i = 0; i < str.length; i++)
+        {
+            MyButtonSprite b = getNormalButton(CAMERA_WIDTH + 20, 200 + 118 * i, str[i], i == 0 && !allPass, listener);
+            menuChildScene.attachChild(b);
+            b.registerEntityModifier(new SequenceEntityModifier(new IEntityModifier[] {
+                new DelayModifier(0.02F * (float)i), new MoveModifier(1.0F, CAMERA_WIDTH + 20, 20F, 200 + 118 * i, 200 + 118 * i, EaseElasticOut.getInstance())
+            }));
+            buttonSet.add(b);
+        }
+
+        registerTouchArea();
+        menuMinY = (-118 * str.length + CAMERA_HEIGHT) - 353;
+        if(menuMinY > 0.0F)
+            menuMinY = 0.0F;
+    }
+
+    public void step()
+    {
+        super.step();
+        if(showing && showingChild)
+            ui.step();
+    }
+
+    public void scrolling(boolean end, float scrollDist)
+    {
+        super.scrolling(end, scrollDist);
+        if(showing && showingChild)
+            ui.scrolling(end, scrollDist);
+    }
+
+    boolean allPass;
+    int level;
+    boolean showingChild;
+    public ChildBattleUI ui;
+}
